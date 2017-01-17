@@ -25,9 +25,9 @@
     </div>
 
     <div class="jumbotron">
-        <form action="" method="post" class="form-inline">
+        <form action="?add" method="post" class="form-inline">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Add something to the list">
+                <input name="todo" type="text" class="form-control" placeholder="Add something to the list">
             </div>
             <button type="submit" class="btn btn-default">Add</button>
         </form>
@@ -36,30 +36,26 @@
     <div class="row marketing">
         <div class="col-lg-12">
             <ul class="list-group">
+                <?php foreach($todos as $item): ?>
                 <li class="list-group-item">
-                    <span>Go to workshop</span>
+                    <span><?php echo $item['todo']; ?></span>
                     <div class="actions pull-right">
-                        <form action="" method="post">
-                            <button type="submit" class="btn btn-xs btn-success">mark as done</button>
+                        <form action="?action=done" method="post">
+                            <input name="id" type="hidden" value="<?=$item['id']?>">
+                            <button
+                            <?php if($item['done']):?> disabled="disabled"<?php endif; ?>
+                            type="submit"
+                            class="btn btn-xs btn-success">mark as done</button>
                         </form>
-                        <form action="" method="post">
+                        <form action="?action=delete" method="post">
+                            <input name="id" type="hidden" value="<?=$item['id']?>">
                             <button type="submit" class="btn btn-xs btn-danger">remove</button>
                         </form>
                     </div>
                 </li>
-                <li class="list-group-item">
-                    <span>Learn some PHP</span>
-                    <div class="actions pull-right">
-                        <form action="" method="post">
-                            <button type="submit" class="btn btn-xs btn-success">mark as done</button>
-                        </form>
-                        <form action="" method="post">
-                            <button type="submit" class="btn btn-xs btn-danger">remove</button>
-                        </form>
-                    </div>
-                </li>
+                <?php endforeach; ?>
             </ul>
-            <p>Items in list: 2</p>
+            <p>Items in list: <?=$count?></p>
         </div>
     </div>
 
